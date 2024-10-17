@@ -11,6 +11,11 @@ import {
 } from "@/components/ui/form"
 import { Control } from "react-hook-form"
 import { FormFieldType } from "./forms/PatientFrom"
+import Image from "next/image"
+
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+
 
 interface CustomProps {
     control: Control<any>,
@@ -28,12 +33,47 @@ interface CustomProps {
 }
 
 const RenderField = ({ field, props }: { field: any, props: CustomProps }) => {
-    return (
-        <Input
-            type="text"
-            placeholder="Arnab"
-        />
-    )
+    const { fieldType, iconAlt, iconSrc, placeholder, } = props;
+
+    switch (fieldType) {
+        case FormFieldType.INPUT:
+            return (
+                <div className="flex rounded-md border border-dark-500 bg-dark-400">
+                    {iconSrc && (
+                        <Image
+                            src={iconSrc}
+                            height={25}
+                            width={25}
+                            alt={iconAlt || "icon"}
+                            className="ml-2"
+                        />
+                    )}
+                    <FormControl>
+                        <Input
+                            placeholder={placeholder}
+                            {...field}
+                            className="shad-input border-0"
+                        />
+                    </FormControl>
+                </div>
+            )
+        case FormFieldType.PHONE_INPUT:
+            return (
+                <FormControl>
+                    <PhoneInput 
+                        defaultCountry="BD"
+                        placeholder={placeholder}
+                        international
+                        withCountryCallingCode
+                        value={field.value as undefined}
+                        onChange={field.onChange}
+                        className="input-phone"
+                    />
+                </FormControl>
+            )
+        default:
+            break;
+    }
 }
 
 const CustomFromField = (props: CustomProps) => {
@@ -50,7 +90,7 @@ const CustomFromField = (props: CustomProps) => {
 
                     <RenderField field={field} props={props} />
 
-                    <FormMessage className="shad-error"/>
+                    <FormMessage className="shad-error" />
                 </FormItem>
             )}
         />
