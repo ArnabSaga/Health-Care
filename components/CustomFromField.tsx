@@ -42,8 +42,8 @@ const RenderField = ({ field, props }: { field: any, props: CustomProps }) => {
                     {iconSrc && (
                         <Image
                             src={iconSrc}
-                            height={25}
-                            width={25}
+                            height={35}
+                            width={35}
                             alt={iconAlt || "icon"}
                             className="ml-2"
                         />
