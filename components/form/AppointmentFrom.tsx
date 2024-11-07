@@ -52,12 +52,16 @@ const AppointmentFrom = ({
                 status = "cancelled";
                 break;
             default:
-                status = "padding"
+                status = "panding" //typo mistake
                 break;
         }
 
+        // console.log("Before the Type", type); ERROR CHECKING
+
         try {
             if (type === "create" && patientId) {
+                // console.log("I'm here"); ERROR CHECKING
+
                 const appointmentData = {
                     userId,
                     patient: patientId!,
@@ -69,14 +73,13 @@ const AppointmentFrom = ({
                 };
 
                 const appointment = await createAppointment(appointmentData);
+                // console.log("The new appointment", appointment); ERROR CHECKING
 
                 if (appointment) {
                     form.reset();
                     router.push(`/patients/${userId}/new-appointment/success?appointmentId=${appointment.id}`)
                 }
             }
-
-
 
         } catch (error) {
             console.log("Appointment From error", error);
